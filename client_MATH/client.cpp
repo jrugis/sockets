@@ -45,13 +45,8 @@ int main(int argc, char *argv[]) {
   /* Send data to the server */
   strcpy(buffer, argv[3]);
   double* vals = (double*)(buffer+8);
-  vals[0] = atof(argv[4]);
-  vals[1] = atof(argv[5]);
-  vals[2] = atof(argv[6]);
-  vals[3] = atof(argv[7]);
-  vals[4] = atof(argv[8]);
-  vals[5] = atof(argv[9]);
-  int n = vals[2] * vals[5]; // number of complex values to compute
+  for(int i=0; i<6; i++) vals[i] = atof(argv[i+4]); // real & imagingary parameters
+  int n = vals[2] * vals[5];                        // number of complex values to compute
   *(int*)(buffer+4) = n;
   unsigned int bytes = 16*n;
   if(bytes > BUFFSIZE) {
