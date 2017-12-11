@@ -45,7 +45,7 @@ int zeta(char* buffer)
 
 int solve(char* buffer)
 {
-  if(strncmp(buffer, ".ZTA", 4) == 0) return(zeta(buffer));
+  if(strncmp(buffer, ".L01", 4) == 0) return(zeta(buffer));
   return(sprintf(buffer, "%s", "NULL"));
 }
 
