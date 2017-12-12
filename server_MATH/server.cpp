@@ -23,23 +23,23 @@ void HandleClient(int sock){
   while(true){
     // receive message
     if ((received = recv(sock, buffer, BUFFSIZE, 0)) < 0) {
-      Die("SERVER: Failed to receive bytes from client");
+      Die("Failed to receive bytes from client");
     }
     if(received == 0) break;
-    fprintf(stdout, "SERVER: Received %d bytes\n", received);
+    fprintf(stdout, "Received %d bytes, ", received);
     if(buffer[0] != '.'){
-      Die("SERVER: Bad token from client");
+      Die("Bad token from client");
     }
 
     // get results from solver
     int bytes = solve(buffer);
-    fprintf(stdout, "SERVER: Sending %d bytes\n", bytes);
+    fprintf(stdout, "Sending %d bytes\n", bytes);
     if (send(sock, buffer, bytes, 0) != bytes) {
-      Die("SERVER: Failed to send bytes to client");
+      Die("Failed to send bytes to client");
     }
   }
   close(sock);
-  fprintf(stdout, "SERVER: Client disconnected.\n");
+  fprintf(stdout, "Client disconnected.\n");
 }
 
 int main(int argc, char *argv[]) {
@@ -54,7 +54,7 @@ int main(int argc, char *argv[]) {
 
   // create the TCP socket
   if((serversock = socket(PF_INET, SOCK_STREAM, IPPROTO_TCP)) < 0){
-    Die("SERVER: Failed to create socket");
+    Die("Failed to create socket");
   }
 
   // construct the server sockaddr_in structure
@@ -66,25 +66,25 @@ int main(int argc, char *argv[]) {
   // bind the server socket
   if(bind(serversock, (struct sockaddr *)
 		  &echoserver, sizeof(echoserver)) < 0){
-    Die("SERVER: Failed to bind the server socket");
+    Die("Failed to bind the server socket");
   }
 
   // listen on the server socket
   if(listen(serversock, MAXPENDING) < 0){
-    Die("SERVER: Failed to listen on server socket");
+    Die("Failed to listen on server socket");
   }
 
   // run until cancelled
   while(1){
     unsigned int clientlen = sizeof(echoclient);
     // wait for client connection
-    fprintf(stdout, "SERVER: Waiting for client.\n");
+    fprintf(stdout, "Waiting for client.\n");
     if((clientsock =
          accept(serversock, (struct sockaddr *) &echoclient,
                 &clientlen)) < 0) {
-      Die("SERVER: Failed to accept client connection");
+      Die("Failed to accept client connection");
     }
-    fprintf(stdout, "SERVER: Client connected: %s\n",
+    fprintf(stdout, "Client connected: %s\n",
                     inet_ntoa(echoclient.sin_addr));
     HandleClient(clientsock);
   }

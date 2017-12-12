@@ -14,7 +14,7 @@ using namespace std;
 
 int zeta(char* buffer)
 {
-  fprintf(stdout, "SOLVER: zeta\n");
+  fprintf(stdout, "L01, ");
   double* out = (double*)buffer;
   int n = *((int*)(buffer+4));  // count of (2-tuple) complex values
   double* dp = (double*)(buffer+8);
